@@ -32,17 +32,17 @@ var ACCESSORY = {
 
   },
   identify: function() {
-    console.log("Identify the pump!");
+    console.log("Identify the "+options.clientId+"!");
   }
 }
 
 // Generate a consistent UUID for our light Accessory that will remain the same even when
 // restarting our server. We use the `uuid.generate` helper function to create a deterministic
 // UUID based on an arbitrary "namespace" and the word "Christmaslight".
-var accessoryUUID = uuid.generate('hap-nodejs:accessories:Pump');
+var accessoryUUID = uuid.generate('hap-nodejs:accessories:'+options.clientId);
 
 // This is the Accessory that we'll return to HAP-NodeJS that represents our fake light.
-var accessory = exports.accessory = new Accessory('Outlet', accessoryUUID);
+var accessory = exports.accessory = new Accessory(options.clientId, accessoryUUID);
 
 // Add properties for publishing (in case we're using Core.js and not BridgedCore.js)
 accessory.username = "1B:3C:1C:8D:6E:FF";
@@ -64,7 +64,7 @@ accessory.on('identify', function(paired, callback) {
 // Add the actual Lightbulb Service and listen for change events from iOS.
 // We can see the complete list of Services and Characteristics in `lib/gen/HomeKitTypes.js`
 accessory
-  .addService(Service.Outlet, "Pump") // services exposed to the user should have "names" like "Fake Light" for us
+  .addService(Service.Outlet, options.clientId) // services exposed to the user should have "names" like "Fake Light" for us
   .getCharacteristic(Characteristic.On)
   .on('set', function(value, callback) {
     ACCESSORY.setPowerOn(value);
