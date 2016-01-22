@@ -40,7 +40,7 @@ var ACCESSORY = {
 // restarting our server. We use the `uuid.generate` helper function to create a deterministic
 // UUID based on an arbitrary "namespace" and the word "Christmaslight".
 var accessoryUUID = uuid.generate('hap-nodejs:accessories:'+options.clientId);
-
+console.log(accessoryUUID);
 // This is the Accessory that we'll return to HAP-NodeJS that represents our fake light.
 var accessory = exports.accessory = new Accessory(options.clientId, accessoryUUID);
 
