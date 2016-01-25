@@ -94,6 +94,7 @@ accessory
           callback(err, true);
           break;
         default:
+          callback(err, false);
           break;
       }
       console.log(message.toString());
