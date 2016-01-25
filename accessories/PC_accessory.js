@@ -10,6 +10,10 @@ var options = {
 var client = mqtt.connect(options);
 console.log(options.clientId+" Connected to MQTT broker");
 
+client.on('connect', function () {
+  client.subscribe(options.clientId+"-in");
+});
+
 var Accessory = require('../').Accessory;
 var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
@@ -22,11 +26,11 @@ var ACCESSORY = {
   setPowerOn: function(on) {
     console.log("Turning the "+options.clientId+" %s!", on ? "on" : "off");
     if (on) {
-      client.publish(options.clientId, 'on');
+      client.publish(options.clientId+"-out", 'on');
       ACCESSORY.powerOn = on;
    	}
     else {
-	    client.publish(options.clientId,'off');
+	    client.publish(options.clientId+"-out",'off');
       ACCESSORY.powerOn = false;
    };
 
@@ -84,12 +88,14 @@ accessory
 
     var err = null; // in case there were any problems
 
-    if (ACCESSORY.powerOn) {
-      console.log("Are we on? Yes.");
-      callback(err, true);
-    }
-    else {
-      console.log("Are we on? No.");
-      callback(err, false);
-    }
+    client.on('message', function (topic, message) {
+      switch (message) {
+        case "on":
+          callback(err, true);
+          break;
+        default:
+          break;
+      }
+      console.log(message.toString());
+    });
   });
