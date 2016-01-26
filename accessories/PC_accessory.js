@@ -60,7 +60,7 @@ console.log(accessoryUUID);
 var accessory = exports.accessory = new Accessory(options.clientId, accessoryUUID);
 
 // Add properties for publishing (in case we're using Core.js and not BridgedCore.js)
-accessory.username = "1B:3C:1C:8D:6E:FF";
+accessory.username = "1B:3D:1C:9D:7E:FF";
 accessory.pincode = "031-45-154";
 
 // set some basic properties (these values are arbitrary and setting them is optional)
@@ -103,10 +103,10 @@ accessory
 
       setTimeout(function(){
         if (connectionState) {
-          console.log("Are we on? Yes.");
+          console.log("Is "+options.clientId+" on? Yes.");
         }
         else {
-          console.log("Are we on? No.");
+          console.log("Is "+options.clientId+" on? No.");
         }
         callback(err, connectionState);
       }, 1000);

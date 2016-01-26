@@ -85,11 +85,11 @@ accessory
     var err = null; // in case there were any problems
 
     if (ACCESSORY.powerOn) {
-      console.log("Are we on? Yes.");
+      console.log("Is "+options.clientId+" on? Yes.");
       callback(err, true);
     }
     else {
-      console.log("Are we on? No.");
+      console.log("Is "+options.clientId+" on? No.");
       callback(err, false);
     }
   });
