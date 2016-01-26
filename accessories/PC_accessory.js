@@ -88,6 +88,8 @@ accessory
 
     var err = null; // in case there were any problems
 
+    client.publish(options.clientId+"-out", 'get');
+
     client.on('message', function (topic, message) {
       switch (message) {
         case "on":
