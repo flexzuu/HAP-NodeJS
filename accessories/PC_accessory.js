@@ -13,6 +13,17 @@ console.log(options.clientId+" Connected to MQTT broker");
 client.on('connect', function () {
   client.subscribe(options.clientId+"-in");
 });
+var connectionState = false;
+client.on('message', function (topic, message) {
+  switch (message) {
+    case "on":
+      connectionState = true;
+      break;
+    default:
+      connectionState = false;
+  }
+  console.log(message.toString());
+});
 
 var Accessory = require('../').Accessory;
 var Service = require('../').Service;
@@ -87,18 +98,8 @@ accessory
     // few seconds to respond, Siri will give up.
 
     var err = null; // in case there were any problems
+      connectionState = false;
+      client.publish(options.clientId+"-out", 'get');
 
-    client.publish(options.clientId+"-out", 'get');
-
-    client.on('message', function (topic, message) {
-      switch (message) {
-        case "on":
-          callback(err, true);
-          break;
-        default:
-          callback(err, false);
-          break;
-      }
-      console.log(message.toString());
-    });
+      setTimeout(callback(err, connectionState), 1000);
   });
