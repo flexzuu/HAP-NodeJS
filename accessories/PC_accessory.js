@@ -15,7 +15,7 @@ client.on('connect', function () {
 });
 var connectionState = false;
 client.on('message', function (topic, message) {
-  switch (message) {
+  switch (message.toString()) {
     case "on":
       connectionState = true;
       console.log("PC reports it is on!");
