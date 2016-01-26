@@ -18,11 +18,11 @@ client.on('message', function (topic, message) {
   switch (message) {
     case "on":
       connectionState = true;
+      console.log("PC reports it is on!");
       break;
     default:
       connectionState = false;
   }
-  console.log(message.toString());
 });
 
 var Accessory = require('../').Accessory;
@@ -101,5 +101,13 @@ accessory
       connectionState = false;
       client.publish(options.clientId+"-out", 'get');
 
-      setTimeout(callback(err, connectionState), 1000);
+      setTimeout(function(){
+        if (connectionState) {
+          console.log("Are we on? Yes.");
+        }
+        else {
+          console.log("Are we on? No.");
+        }
+        callback(err, connectionState);
+      }, 1000);
   });
