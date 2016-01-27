@@ -78,8 +78,9 @@ accessory.on('identify', function(paired, callback) {
 
 // Add the actual Lightbulb Service and listen for change events from iOS.
 // We can see the complete list of Services and Characteristics in `lib/gen/HomeKitTypes.js`
+var service = Service.Switch;
 accessory
-  .addService(Service.Outlet, options.clientId) // services exposed to the user should have "names" like "Fake Light" for us
+  .addService(service, options.clientId) // services exposed to the user should have "names" like "Fake Light" for us
   .getCharacteristic(Characteristic.On)
   .on('set', function(value, callback) {
     ACCESSORY.setPowerOn(value);
@@ -89,7 +90,7 @@ accessory
 // We want to intercept requests for our current power state so we can query the hardware itself instead of
 // allowing HAP-NodeJS to return the cached Characteristic.value.
 accessory
-  .getService(Service.Outlet)
+  .getService(service)
   .getCharacteristic(Characteristic.On)
   .on('get', function(callback) {
 
