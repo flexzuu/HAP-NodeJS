@@ -28,13 +28,13 @@ var ACCESSORY = {
     else {
 	    client.publish(options.clientId,'off');
       ACCESSORY.powerOn = false;
-   };
+   }
 
   },
   identify: function() {
     console.log("Identify the "+options.clientId+"!");
   }
-}
+};
 
 // Generate a consistent UUID for our light Accessory that will remain the same even when
 // restarting our server. We use the `uuid.generate` helper function to create a deterministic
